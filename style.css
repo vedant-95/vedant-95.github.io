@@ -37,6 +37,7 @@ a{color:#1a3cff}
 .me{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);text-align:center}
 .blob{width:260px;height:320px;margin:0 auto;border-radius:48% 52% 45% 55%/55% 45% 55% 45%;background:linear-gradient(160deg,#e9f76b,#9ccf2a);border:3px solid #1a1aa0;display:flex;align-items:center;justify-content:center;color:#2a3a00;cursor:pointer;animation:float 6s ease-in-out infinite}
 @keyframes float{50%{transform:translateY(-12px) rotate(1deg)}}
+.spin{display:block;width:300px;height:auto;margin:0 auto;cursor:pointer}
 .hello{display:none;position:absolute;left:50%;top:100%;transform:translateX(-50%);width:340px;margin-top:14px;background:#fff;border:1px solid #000;box-shadow:3px 3px 0 rgba(0,0,0,.35);padding:12px;text-align:left}
 .me:hover .hello,.me.open .hello{display:block}
 
@@ -72,7 +73,7 @@ a{color:#1a3cff}
   .icons{order:1;grid-template-columns:repeat(4,1fr);gap:8px}
   .icon svg{width:52px;height:52px}
   .icon span{background:rgba(10,20,80,.45);padding:0 4px;border-radius:3px;font-size:11px}
-  .me{order:2}.blob{width:200px;height:240px}
+  .me{order:2;margin-top:30px}.spin{width:230px}
   .hello{display:block;position:static;transform:none;width:auto;margin-top:14px}
   .folder{position:fixed!important;left:8px!important;right:8px;top:8px!important;width:auto}
   .folder .body{max-height:calc(100vh - 110px)}
