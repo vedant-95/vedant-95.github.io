@@ -30,8 +30,9 @@ function openFolder(f) {
     win = document.createElement("section");
     win.className = "window folder"; win.id = "f-" + f.id;
     win.innerHTML = `<header style="--bar:#1a3cff"><button class="min">-</button><span>${f.title}</span><button class="x" aria-label="close">x</button></header><div class="body">${f.html}</div>`;
-    const n = opened++ % 6;
-    win.style.left = Math.max(20, window.innerWidth / 2 - 220 + (n - 2) * 36) + "px";
+    const n = opened++ % 6, w = f.width || 440;
+    if (f.width) win.style.width = w + "px";
+    win.style.left = Math.max(20, Math.min(Math.max(340, window.innerWidth / 2 - w / 2 + (n - 2) * 36), window.innerWidth - w - 230)) + "px";
     win.style.top = (60 + n * 30) + "px";
     win.querySelector(".x").onclick = () => win.remove();
     document.querySelector(".desktop").appendChild(win);
@@ -42,7 +43,7 @@ function openFolder(f) {
 }
 
 document.getElementById("icons").innerHTML = FOLDERS.map(f =>
-  `<button class="icon" data-id="${f.id}">${ICONS[f.icon]}<span>${f.label}</span></button>`).join("");
+  `<button class="icon" data-id="${f.id}">${f.img ? `<img src="${f.img}" alt="">` : ICONS[f.icon]}<span>${f.label}</span></button>`).join("");
 document.querySelectorAll(".icon").forEach(b => b.onclick = () => openFolder(FOLDERS.find(f => f.id === b.dataset.id)));
 
 document.getElementById("status").innerHTML = STATUS;
@@ -62,3 +63,31 @@ document.getElementById("sky-btn").onclick = e => {
   const next = skies[(skies.indexOf(document.body.className) + 1) % skies.length];
   document.body.className = next; e.target.textContent = labels[next];
 };
+
+const preview = document.createElement("div");
+preview.className = "preview";
+document.body.appendChild(preview);
+document.addEventListener("mouseover", e => {
+  const job = e.target.closest(".job");
+  if (job) {
+    const j = JOBS[job.dataset.i], chart = job.closest(".body");
+    chart.querySelectorAll(".job.on").forEach(x => x.classList.remove("on"));
+    job.classList.add("on");
+    chart.querySelector(".tl-info").innerHTML = `<b style="color:${j.color}">${j.co}</b> <span class="small">${j.years}</span><br>${j.what}`;
+  }
+  const tile = e.target.closest(".tile");
+  if (!tile || mobile() || preview.dataset.i === tile.dataset.i && preview.classList.contains("on")) return;
+  const b = BUILDS[tile.dataset.i];
+  preview.dataset.i = tile.dataset.i;
+  preview.innerHTML = `<div class="bar"><i></i><i></i><i></i><span>${new URL(b.url).host}</span></div>` +
+    (b.video ? `<video src="${b.video}" autoplay muted loop playsinline></video>` : "") + `<p><b>${b.name}</b><br>${b.text}</p>`;
+  const r = tile.getBoundingClientRect(), wr = tile.closest(".window").getBoundingClientRect(), pw = 420;
+  preview.style.left = Math.max(10, Math.min(r.left + 20, innerWidth - pw - 10)) + "px";
+  preview.style.top = Math.max(10, Math.min(wr.bottom - 24, innerHeight - (b.video ? 380 : 120))) + "px";
+  preview.style.zIndex = z + 1;
+  preview.classList.add("on");
+});
+document.addEventListener("mouseout", e => {
+  const tile = e.target.closest(".tile");
+  if (tile && !tile.contains(e.relatedTarget)) preview.classList.remove("on");
+});
