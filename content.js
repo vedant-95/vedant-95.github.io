@@ -1,7 +1,7 @@
 // Everything on the site lives here. To add a new thing, add an entry to FOLDERS.
 const ROLES = ["data scientist", "builder", "musician", "ex-Immortal", "trader", "human"];
 
-const STATUS = `Vedant is building ML products at <b>EXL</b> in the Bay Area.<br><br>
+const STATUS = `Vedant is building ML products at <b>EXL Services</b> in the Bay Area.<br><br>
 <b>Mood:</b> writing a status message is harder than training a model.`;
 
 const REVIEWS = [
@@ -30,8 +30,8 @@ const JOBS = [
   { co: "ML platform", title: "Senior Data Scientist", years: "2026-now", dates: "Jan 2026 - now · Foster City", from: 2026, to: 2026.8, color: "#ff4fa3", client: true, now: true,
     pts: ["Leading product development of a self-serve ML platform on AWS (S3, SageMaker). Enterprise marketing teams use it to build their own propensity models.",
       "Cross-sell and up-sell response models (XGBoost, Random Forest) that pick campaign audiences.", "Built a performance dashboard suite for leadership, end to end."] },
-  { co: "EXL", title: "Consulting", years: "2021-now", dates: "Mar 2021 - now", from: 2021.17, to: 2026.8, band: true, color: "#1a3cff",
-    pts: ["My employer since 2021. Every project from PNC onward was through EXL."] },
+  { co: "EXL Services", title: "Consulting", years: "2021-now", dates: "Mar 2021 - now", from: 2021.17, to: 2026.8, band: true, color: "#1a3cff",
+    pts: ["My employer since 2021. Every project from PNC onward was through EXL Services."] },
   { co: "Claude Certified Architect - Foundations", title: "Anthropic", years: "Aug 2026", dates: "Aug 2026 · score 815/1000", at: 2027, dx: -60, cert: "f9aba080-01d4-4efb-86f8-f0de5037b60b", color: "#b87900",
     pts: ["Agentic architecture, tool design and MCP, prompt engineering, Claude Code.", "Click the medal to see the badge."] },
   { co: "Claude Certified Architect - Professional", title: "Anthropic", years: "Sep 2026", dates: "Sep 2026 · score 855/1000", at: 2027, dx: -20, cert: "74ca2ed9-8360-4b84-af15-a70b4ccecffb", color: "#b87900",
@@ -51,7 +51,7 @@ const WORK_HTML = `
   </div>
   <div class="chart">
     ${JOBS.map((j, i) => j.band ? `<div class="job band" data-i="${i}" style="--l:${pct(j.from)};--w:${pct(2017 + j.to - j.from)};--h:${ROWS.filter(r => r.client).length * 36}px"><span><b>${j.co}</b> ${j.years}</span></div>` : "").join("")}
-    ${ROWS.map(j => `<div class="track"><div class="job${j.to > 2023.5 ? " flip" : ""}${j.school ? " school" : ""}${j.now ? " on" : ""}" data-i="${JOBS.indexOf(j)}" style="--l:${pct(j.from)};--w:${pct(2017 + j.to - j.from)};--c:${j.color}"><span><b>${j.co}</b> ${j.years}${j.badge ? ` <em>${j.badge}</em>` : ""}</span></div></div>`).join("")}
+    ${ROWS.map(j => `<div class="track"><div class="job${j.to - j.from > 2 ? " inside" : j.to > 2023.5 ? " flip" : ""}${j.school ? " school" : ""}${j.now ? " on" : ""}" data-i="${JOBS.indexOf(j)}" style="--l:${pct(j.from)};--w:${pct(2017 + j.to - j.from)};--c:${j.color}"><span><b>${j.co}</b> ${j.years}${j.badge ? ` <em>${j.badge}</em>` : ""}</span></div></div>`).join("")}
     ${JOBS.map((j, i) => j.cert ? `<a class="job cert" data-i="${i}" href="${CREDLY(j.cert)}" target="_blank" style="--l:${pct(j.at)};--dx:${j.dx}px"><img src="img/builds/claude.webp" alt="${j.co}"></a>` : "").join("")}
     <div class="axis">${[2017,2018,2019,2020,2021,2022,2023,2024,2025,2026].map(y => `<span style="left:${pct(y + .5)}">${y}</span>`).join("")}</div>
   </div>

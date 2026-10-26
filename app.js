@@ -32,10 +32,10 @@ function openFolder(f) {
     win.innerHTML = `<header style="--bar:#1a3cff"><button class="min">-</button><span>${f.title}</span><button class="x" aria-label="close">x</button></header><div class="body">${f.html}</div>`;
     const n = opened++ % 6, w = f.width || 440;
     if (f.width) win.style.width = w + "px";
-    win.style.left = Math.max(20, Math.min(Math.max(340, window.innerWidth / 2 - w / 2 + (n - 2) * 36), window.innerWidth - w - 230)) + "px";
-    win.style.top = (60 + n * 30) + "px";
     win.querySelector(".x").onclick = () => win.remove();
     document.querySelector(".desktop").appendChild(win);
+    win.style.left = Math.max(10, (window.innerWidth - win.offsetWidth) / 2 + n * 30) + "px";
+    win.style.top = (60 + n * 30) + "px";
     draggable(win);
   }
   win.classList.remove("minimized");
@@ -64,17 +64,32 @@ document.getElementById("sky-btn").onclick = e => {
   document.body.className = next; e.target.textContent = labels[next];
 };
 
+function showJob(job) {
+  const body = job.closest(".body");
+  body.querySelectorAll(".job.on").forEach(x => x.classList.remove("on"));
+  job.classList.add("on");
+  body.querySelector(".tl-info").innerHTML = jobInfo(JOBS[job.dataset.i]);
+}
+document.addEventListener("click", e => {
+  const job = e.target.closest(".job");
+  if (!job) return;
+  job.closest(".chart").querySelectorAll(".job.pinned").forEach(x => x.classList.remove("pinned"));
+  job.classList.add("pinned");
+  showJob(job);
+});
+document.addEventListener("mouseout", e => {
+  const chart = e.target.closest(".chart");
+  if (!chart || chart.contains(e.relatedTarget)) return;
+  const pinned = chart.querySelector(".job.pinned") || chart.querySelector(`.job[data-i="${JOBS.findIndex(j => j.now)}"]`);
+  if (pinned) showJob(pinned);
+});
+
 const preview = document.createElement("div");
 preview.className = "preview";
 document.body.appendChild(preview);
 document.addEventListener("mouseover", e => {
   const job = e.target.closest(".job");
-  if (job) {
-    const j = JOBS[job.dataset.i], chart = job.closest(".body");
-    chart.querySelectorAll(".job.on").forEach(x => x.classList.remove("on"));
-    job.classList.add("on");
-    chart.querySelector(".tl-info").innerHTML = jobInfo(j);
-  }
+  if (job) showJob(job);
   const tile = e.target.closest(".tile");
   if (!tile || mobile() || preview.dataset.i === tile.dataset.i && preview.classList.contains("on")) return;
   const b = BUILDS[tile.dataset.i];

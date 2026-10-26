@@ -44,17 +44,18 @@ a{color:#1a3cff}
 
 .folder{position:absolute;width:440px}
 .folder .body{max-height:60vh}
-.chart{position:relative;margin:34px 0 8px;padding-bottom:24px;background:linear-gradient(90deg,#e4e4ef 1px,transparent 1px) 0 0/10% 100%;border-left:1px solid #000;border-bottom:1px solid #000}
+.chart{position:relative;margin:34px 0 8px;padding-bottom:24px;background:linear-gradient(90deg,#e4e4ef 1px,transparent 1px) 0 0/10% 100%;border:1px solid #000;padding-top:10px}
 .track{position:relative;height:36px}
 .job{position:absolute;top:7px;height:22px;left:var(--l);width:var(--w);background:var(--c);border:1px solid #000;border-radius:11px;box-shadow:2px 2px 0 rgba(0,0,0,.3);cursor:pointer;transition:transform .15s,box-shadow .15s}
 .job:hover,.job.on{transform:translateY(-2px);box-shadow:3px 5px 0 rgba(0,0,0,.3)}
 .job span{position:absolute;left:calc(100% + 8px);top:1px;white-space:nowrap;font-size:12px}
 .job.flip span{left:auto;right:calc(100% + 8px)}
+.job.inside span{left:10px;color:#fff}.job.inside em{color:#000}
 .job em{font-style:normal;font-weight:700;font-size:11px;background:#e9ff3a;border:1px solid #000;padding:0 4px;margin-left:4px;display:inline-block;transform:rotate(-4deg)}
 .track{pointer-events:none}.track .job{pointer-events:auto}
 .job.school{background:repeating-linear-gradient(45deg,var(--c) 0 6px,#fff1b8 6px 12px)}
-.job.band{top:-5px;height:calc(var(--h) + 6px);background:rgba(26,60,255,.07);border:1.5px dashed #1a3cff;border-radius:12px;box-shadow:none;transform:none}
-.job.band>span{left:8px;right:auto;top:auto;bottom:100%;margin-bottom:3px;font-size:11px;color:#1a3cff}
+.job.band{top:5px;height:calc(var(--h) + 6px);background:rgba(26,60,255,.07);border:1.5px dashed #1a3cff;border-radius:12px;box-shadow:none;transform:none}
+.job.band>span{left:8px;right:auto;top:auto;bottom:100%;margin-bottom:12px;font-size:11px;color:#1a3cff}
 .job.band>span i{font-style:normal}
 .tl-info a{color:#1a3cff}
 .job.band.on{background:rgba(26,60,255,.14)}
