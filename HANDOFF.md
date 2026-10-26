@@ -46,6 +46,12 @@ Webull has an official OpenAPI (https://developer.webull.com) with Account Balan
 3. A scheduled GitHub Action (e.g. daily) runs a small Python script that calls the API and writes `data/markets.json`, then commits it. The markets window reads that JSON.
 4. Privacy: publish % returns, tickers and dates, not dollar balances or account IDs, unless Vedant explicitly wants dollar amounts public.
 
+## Robinhood (not built)
+- No official API key for stocks like Webull has. The official Crypto Trading API (docs.robinhood.com/crypto/trading) covers crypto only.
+- Official option for stocks: the Robinhood Trading MCP (https://agent.robinhood.com/mcp/trading). Add it in Claude Desktop (Settings > Connectors > Add custom connector) or Claude Code, then sign in. It can read all accounts, positions, balances and order history. It can also place trades (only in a separate "Agentic" account), so only ask it to read.
+- Simple manual flow: every so often ask Claude, with the connector on, to update `data/markets.json` (% returns, tickers, dates only) and push. This is not unattended: the connector signs in through your browser.
+- Avoid unofficial libraries (e.g. robin_stocks) that log in with your password. They can break, and they put your login in a script.
+
 ## How assets were made (`tools/`)
 - `tools/icons/icons.py`: Blender (4.2, Cycles CPU) script that renders each desktop icon to a transparent PNG: `blender -b -P icons.py -- OUTDIR [names]`. The PNGs were then resized to webp with Pillow.
 - `tools/previews/rec.py URL NAME`: records a scrolling video of a website with Playwright and compresses it with ffmpeg into `img/builds/NAME.mp4`. Run it from `tools/previews/`.
