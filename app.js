@@ -73,7 +73,7 @@ document.addEventListener("mouseover", e => {
     const j = JOBS[job.dataset.i], chart = job.closest(".body");
     chart.querySelectorAll(".job.on").forEach(x => x.classList.remove("on"));
     job.classList.add("on");
-    chart.querySelector(".tl-info").innerHTML = `<b style="color:${j.color}">${j.co}</b> <span class="small">${j.years}</span><br>${j.what}`;
+    chart.querySelector(".tl-info").innerHTML = jobInfo(j);
   }
   const tile = e.target.closest(".tile");
   if (!tile || mobile() || preview.dataset.i === tile.dataset.i && preview.classList.contains("on")) return;
